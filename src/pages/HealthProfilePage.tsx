@@ -152,17 +152,17 @@ export function HealthProfilePage() {
   if (loading) {
     return (
       <PageContainer className="max-w-4xl">
-        <h1 className="text-3xl font-bold text-white mb-6">Health Profile</h1>
-        <div className="text-white/60 text-center py-8">Loading profile...</div>
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Health Profile</h1>
+        <div className="text-slate-500 dark:text-white/60 text-center py-8">Loading profile...</div>
       </PageContainer>
     )
   }
 
   return (
     <PageContainer className="max-w-4xl">
-      <h1 className="text-3xl font-bold text-white mb-6">Health Profile</h1>
+      <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Health Profile</h1>
       <div className="space-y-6 mt-4">
-        <p className="text-white/70 text-sm">
+        <p className="text-slate-600 dark:text-white/70 text-sm">
           Manage your baseline health information. All fields are optional and kept private.
         </p>
 
@@ -181,33 +181,33 @@ export function HealthProfilePage() {
         <form onSubmit={handleSave} className="space-y-8">
           {/* Personal Information */}
           <div className="glass-card p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-white mb-4">Personal Information</h2>
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Personal Information</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-white/80 mb-1">
+                <label className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
                   Date of Birth
                 </label>
                 <input
                   type="date"
                   value={dateOfBirth}
                   onChange={(e) => setDateOfBirth(e.target.value)}
-                  className="w-full rounded border border-white/20 bg-white/10 px-3 py-2 text-white text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                  className="w-full rounded border border-slate-200 dark:border-white/20 bg-white dark:bg-white/10 px-3 py-2 text-slate-900 dark:text-white text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white/80 mb-1">
+                <label className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
                   Blood Type
                 </label>
                 <select
                   value={bloodType}
                   onChange={(e) => setBloodType(e.target.value as BloodType)}
-                  className="w-full rounded border border-white/20 bg-white/10 px-3 py-2 text-white text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                  className="w-full rounded border border-slate-200 dark:border-white/20 bg-white dark:bg-slate-800 px-3 py-2 text-slate-900 dark:text-white text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
                 >
-                  <option value="">Select blood type</option>
+                  <option value="" className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">Select blood type</option>
                   {BLOOD_TYPES.map((type) => (
-                    <option key={type} value={type}>{type}</option>
+                    <option key={type} value={type} className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">{type}</option>
                   ))}
                 </select>
               </div>
@@ -216,12 +216,12 @@ export function HealthProfilePage() {
 
           {/* Height & Weight */}
           <div className="glass-card p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-white mb-4">Height & Weight</h2>
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Height & Weight</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Height */}
               <div>
-                <label className="block text-sm font-medium text-white/80 mb-2">
+                <label className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-2">
                   Height
                 </label>
                 <div className="space-y-2">
@@ -232,7 +232,7 @@ export function HealthProfilePage() {
                       className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
                         heightUnit === 'metric'
                           ? 'bg-brand text-white'
-                          : 'bg-white/10 text-white/60 hover:text-white'
+                          : 'bg-white dark:bg-white/10 text-slate-500 dark:text-white/60 hover:text-slate-900 dark:hover:text-white'
                       }`}
                     >
                       cm
@@ -243,7 +243,7 @@ export function HealthProfilePage() {
                       className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
                         heightUnit === 'imperial'
                           ? 'bg-brand text-white'
-                          : 'bg-white/10 text-white/60 hover:text-white'
+                          : 'bg-white dark:bg-white/10 text-slate-500 dark:text-white/60 hover:text-slate-900 dark:hover:text-white'
                       }`}
                     >
                       inches
@@ -255,17 +255,17 @@ export function HealthProfilePage() {
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
                     placeholder={heightUnit === 'metric' ? 'e.g. 170' : 'e.g. 67'}
-                    className="w-full rounded border border-white/20 bg-white/10 px-3 py-2 text-white text-sm placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                    className="w-full rounded border border-slate-200 dark:border-white/20 bg-white dark:bg-white/10 px-3 py-2 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
                   />
                   {getConvertedHeight() && (
-                    <p className="text-xs text-white/50">{getConvertedHeight()}</p>
+                    <p className="text-xs text-slate-500 dark:text-white/50">{getConvertedHeight()}</p>
                   )}
                 </div>
               </div>
 
               {/* Weight */}
               <div>
-                <label className="block text-sm font-medium text-white/80 mb-2">
+                <label className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-2">
                   Weight
                 </label>
                 <div className="space-y-2">
@@ -276,7 +276,7 @@ export function HealthProfilePage() {
                       className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
                         weightUnit === 'metric'
                           ? 'bg-brand text-white'
-                          : 'bg-white/10 text-white/60 hover:text-white'
+                          : 'bg-white dark:bg-white/10 text-slate-500 dark:text-white/60 hover:text-slate-900 dark:hover:text-white'
                       }`}
                     >
                       kg
@@ -287,7 +287,7 @@ export function HealthProfilePage() {
                       className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
                         weightUnit === 'imperial'
                           ? 'bg-brand text-white'
-                          : 'bg-white/10 text-white/60 hover:text-white'
+                          : 'bg-white dark:bg-white/10 text-slate-500 dark:text-white/60 hover:text-slate-900 dark:hover:text-white'
                       }`}
                     >
                       lbs
@@ -299,10 +299,10 @@ export function HealthProfilePage() {
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
                     placeholder={weightUnit === 'metric' ? 'e.g. 70' : 'e.g. 154'}
-                    className="w-full rounded border border-white/20 bg-white/10 px-3 py-2 text-white text-sm placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                    className="w-full rounded border border-slate-200 dark:border-white/20 bg-white dark:bg-white/10 px-3 py-2 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
                   />
                   {getConvertedWeight() && (
-                    <p className="text-xs text-white/50">{getConvertedWeight()}</p>
+                    <p className="text-xs text-slate-500 dark:text-white/50">{getConvertedWeight()}</p>
                   )}
                 </div>
               </div>
@@ -311,7 +311,7 @@ export function HealthProfilePage() {
 
           {/* Allergies & Chronic Conditions */}
           <div className="glass-card p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-white mb-4">Allergies & Conditions</h2>
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Allergies & Conditions</h2>
             
             <TagInput
               label="Allergies"
@@ -332,7 +332,7 @@ export function HealthProfilePage() {
 
           {/* Current Medications */}
           <div className="glass-card p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-white mb-4">Current Medications</h2>
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Current Medications</h2>
             
             <TagInput
               label="Medications"
@@ -345,11 +345,11 @@ export function HealthProfilePage() {
 
           {/* Lifestyle */}
           <div className="glass-card p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-white mb-4">Lifestyle</h2>
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Lifestyle</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-white/80 mb-1">
+                <label className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
                   Average Sleep (hours/night)
                 </label>
                 <input
@@ -360,28 +360,28 @@ export function HealthProfilePage() {
                   value={sleepHours}
                   onChange={(e) => setSleepHours(e.target.value)}
                   placeholder="e.g. 7.5"
-                  className="w-full rounded border border-white/20 bg-white/10 px-3 py-2 text-white text-sm placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                  className="w-full rounded border border-slate-200 dark:border-white/20 bg-white dark:bg-white/10 px-3 py-2 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white/80 mb-1">
+                <label className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
                   Activity Level
                 </label>
                 <select
                   value={activityLevel}
                   onChange={(e) => setActivityLevel(e.target.value)}
-                  className="w-full rounded border border-white/20 bg-white/10 px-3 py-2 text-white text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                  className="w-full rounded border border-slate-200 dark:border-white/20 bg-white dark:bg-slate-800 px-3 py-2 text-slate-900 dark:text-white text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
                 >
-                  <option value="">Select level</option>
+                  <option value="" className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">Select level</option>
                   {ACTIVITY_LEVELS.map((level) => (
-                    <option key={level} value={level}>{level}</option>
+                    <option key={level} value={level} className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">{level}</option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white/80 mb-1">
+                <label className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
                   Diet Type
                 </label>
                 <input
@@ -389,7 +389,7 @@ export function HealthProfilePage() {
                   value={dietType}
                   onChange={(e) => setDietType(e.target.value)}
                   placeholder="e.g. Vegetarian, Keto"
-                  className="w-full rounded border border-white/20 bg-white/10 px-3 py-2 text-white text-sm placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                  className="w-full rounded border border-slate-200 dark:border-white/20 bg-white dark:bg-white/10 px-3 py-2 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
                 />
               </div>
             </div>
@@ -397,11 +397,11 @@ export function HealthProfilePage() {
 
           {/* Emergency Contact & Healthcare Provider */}
           <div className="glass-card p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-white mb-4">Emergency Contact & Healthcare Provider</h2>
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Emergency Contact & Healthcare Provider</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-white/80 mb-1">
+                <label className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
                   Emergency Contact Name
                 </label>
                 <input
@@ -409,12 +409,12 @@ export function HealthProfilePage() {
                   value={emergencyContactName}
                   onChange={(e) => setEmergencyContactName(e.target.value)}
                   placeholder="Full name"
-                  className="w-full rounded border border-white/20 bg-white/10 px-3 py-2 text-white text-sm placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                  className="w-full rounded border border-slate-200 dark:border-white/20 bg-white dark:bg-white/10 px-3 py-2 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white/80 mb-1">
+                <label className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
                   Emergency Contact Phone
                 </label>
                 <input
@@ -422,13 +422,13 @@ export function HealthProfilePage() {
                   value={emergencyContactPhone}
                   onChange={(e) => setEmergencyContactPhone(e.target.value)}
                   placeholder="Phone number"
-                  className="w-full rounded border border-white/20 bg-white/10 px-3 py-2 text-white text-sm placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                  className="w-full rounded border border-slate-200 dark:border-white/20 bg-white dark:bg-white/10 px-3 py-2 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-1">
+              <label className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
                 Primary Care Physician
               </label>
               <input
@@ -436,7 +436,7 @@ export function HealthProfilePage() {
                 value={primaryPhysician}
                 onChange={(e) => setPrimaryPhysician(e.target.value)}
                 placeholder="Doctor's name"
-                className="w-full rounded border border-white/20 bg-white/10 px-3 py-2 text-white text-sm placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                className="w-full rounded border border-slate-200 dark:border-white/20 bg-white dark:bg-white/10 px-3 py-2 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
               />
             </div>
           </div>

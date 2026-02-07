@@ -115,7 +115,7 @@ export function EditLogPage() {
   if (error && !log) {
     return (
       <PageContainer>
-        <Link to="/logs" className="text-brand hover:text-white font-medium mb-4 inline-block">
+        <Link to="/logs" className="text-brand hover:text-slate-900 dark:hover:text-white font-medium mb-4 inline-block">
           ← Back to Logs
         </Link>
         <div className="bg-red-500/10 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg">
@@ -128,15 +128,15 @@ export function EditLogPage() {
   return (
     <PageContainer>
       <div className="flex items-center justify-between mb-4">
-        <Link to={`/logs/${id}`} className="text-brand hover:text-white font-medium">
+        <Link to={`/logs/${id}`} className="text-brand hover:text-slate-900 dark:hover:text-white font-medium">
           ← Back to Log
         </Link>
-        <Link to="/logs" className="text-sm text-white/70 hover:text-white/90">
+        <Link to="/logs" className="text-sm text-slate-600 dark:text-white/70 hover:text-slate-800 dark:hover:text-white/90">
           All Logs
         </Link>
       </div>
 
-      <h1 className="text-2xl font-bold text-white mb-6 font-display">Edit Symptom Log</h1>
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 font-display">Edit Symptom Log</h1>
 
       {error && (
         <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 text-red-300 rounded-lg">
@@ -146,7 +146,7 @@ export function EditLogPage() {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label htmlFor="bodyRegion" className="block text-sm font-medium text-white/80 mb-1">
+          <label htmlFor="bodyRegion" className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
             Body Region <span className="text-red-400">*</span>
           </label>
           <select
@@ -166,7 +166,7 @@ export function EditLogPage() {
         </div>
 
         <div>
-          <label htmlFor="datetime" className="block text-sm font-medium text-white/80 mb-1">
+          <label htmlFor="datetime" className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
             Date &amp; Time
           </label>
           <input
@@ -179,7 +179,7 @@ export function EditLogPage() {
         </div>
 
         <div>
-          <label htmlFor="painScore" className="block text-sm font-medium text-white/80 mb-1">
+          <label htmlFor="painScore" className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
             Pain Score: <span className="font-semibold text-brand">{painScore}</span>
           </label>
           <input
@@ -191,15 +191,15 @@ export function EditLogPage() {
             onChange={(event) => setPainScore(Number(event.target.value))}
             className="w-full accent-brand"
           />
-          <div className="flex justify-between text-xs text-white/50 mt-1">
+          <div className="flex justify-between text-xs text-slate-500 dark:text-white/50 mt-1">
             <span>0 (none)</span>
             <span>10 (severe)</span>
           </div>
         </div>
 
         <div>
-          <label htmlFor="tags" className="block text-sm font-medium text-white/80 mb-1">
-            Tags <span className="text-white/50 font-normal">(comma-separated)</span>
+          <label htmlFor="tags" className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
+            Tags <span className="text-slate-500 dark:text-white/50 font-normal">(comma-separated)</span>
           </label>
           <input
             id="tags"
@@ -212,7 +212,7 @@ export function EditLogPage() {
         </div>
 
         <div>
-          <label htmlFor="notes" className="block text-sm font-medium text-white/80 mb-1">
+          <label htmlFor="notes" className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
             Notes
           </label>
           <textarea
@@ -235,7 +235,7 @@ export function EditLogPage() {
           </button>
           <Link
             to={`/logs/${id}`}
-            className="inline-flex items-center justify-center rounded-lg border border-white/20 px-4 py-2.5 text-white/80 hover:bg-white/10 transition-colors"
+            className="inline-flex items-center justify-center rounded-lg border border-slate-200 dark:border-white/20 px-4 py-2.5 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
           >
             Cancel
           </Link>
