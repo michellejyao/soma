@@ -1,5 +1,5 @@
-import { Suspense, useEffect, useRef } from 'react'
-import { Canvas, useThree } from '@react-three/fiber'
+import { Suspense } from 'react'
+import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { BodyModel } from './BodyModel'
 import { useAppStore } from '../../store'
@@ -11,18 +11,13 @@ import { useAppStore } from '../../store'
 export function BodyViewer() {
   const selectedBodyRegion = useAppStore((s) => s.selectedBodyRegion)
   const setSelectedBodyRegion = useAppStore((s) => s.setSelectedBodyRegion)
-  const showDebug =
-    typeof window !== 'undefined' &&
-    new URLSearchParams(window.location.search).has('debug3d')
-  const controlsRef = useRef<OrbitControls | null>(null)
-
   return (
     <div
       className="rounded-xl overflow-hidden border border-slate-200 bg-slate-100"
-      style={{ width: '100%', height: 480 }}
+      style={{ width: '100%', height: 700 }}
     >
       <Canvas
-        camera={{ position: [0, 5, 0], fov: 35 }}
+        camera={{ position: [0, 1.2, 15], fov: 50 }}
         style={{ width: '100%', height: '100%' }}
         fallback={
           <div className="flex items-center justify-center w-full h-full text-slate-600 text-sm bg-slate-200">
@@ -32,16 +27,6 @@ export function BodyViewer() {
       >
         <ambientLight intensity={0.8} />
         <directionalLight position={[4, 4, 4]} intensity={1} />
-        {showDebug && (
-          <>
-            <axesHelper args={[1]} />
-            <gridHelper args={[4, 8, '#94a3b8', '#cbd5f5']} />
-            <mesh>
-              <sphereGeometry args={[0.05, 16, 16]} />
-              <meshStandardMaterial color="#facc15" />
-            </mesh>
-          </>
-        )}
         <Suspense
           fallback={
             <mesh>
@@ -50,47 +35,24 @@ export function BodyViewer() {
             </mesh>
           }
         >
-          {showDebug && <DebugCameraRig controlsRef={controlsRef} />}
           <BodyModel
             onSelectRegion={setSelectedBodyRegion}
             highlightedRegion={selectedBodyRegion}
-            scaleMultiplier={showDebug ? 1 : 0.7}
-            targetHeight={showDebug ? 0.05 : 1}
-            yOffset={showDebug ? -0.6 : -0.3}
+            yOffset={-5}
+            proxyScale={1.8}
+            proxyZOffset={0.6}
           />
         </Suspense>
         <OrbitControls
           makeDefault
-          enablePan={!showDebug}
+          enablePan={false}
           enableZoom
           enableRotate
-          target={showDebug ? [0, 0, 0] : undefined}
-          minDistance={showDebug ? 1.5 : undefined}
-          maxDistance={showDebug ? 6 : undefined}
-          minPolarAngle={showDebug ? Math.PI * 0.08 : undefined}
-          maxPolarAngle={showDebug ? Math.PI * 0.92 : undefined}
-          ref={controlsRef}
+          target={[0, 1, 0]}
+          minDistance={1000}
+          maxDistance={2000}
         />
       </Canvas>
     </div>
   )
-}
-
-function DebugCameraRig({
-  controlsRef,
-}: {
-  controlsRef: React.MutableRefObject<OrbitControls | null>
-}) {
-  const { camera } = useThree()
-
-  useEffect(() => {
-    camera.position.set(0, 0, 3)
-    camera.lookAt(0, 0, 0)
-    if (controlsRef.current) {
-      controlsRef.current.target.set(0, 0, 0)
-      controlsRef.current.update()
-    }
-  }, [camera, controlsRef])
-
-  return null
 }
