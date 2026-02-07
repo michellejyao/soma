@@ -84,16 +84,26 @@ export function LogsPage() {
                     {new Date(log.date).toLocaleDateString()} at{' '}
                     {new Date(log.date).toLocaleTimeString()}
                   </p>
-                  <button
-                    onClick={() => {
-                      if (log.id && confirm('Delete this log?')) {
-                        deleteLog(log.id)
-                      }
-                    }}
-                    className="text-xs text-red-600 hover:text-red-700 mt-2"
-                  >
-                    Delete
-                  </button>
+                  <div className="mt-2 flex items-center justify-end gap-3">
+                    {log.id && (
+                      <Link
+                        to={`/logs/${log.id}/edit`}
+                        className="text-xs text-indigo-600 hover:text-indigo-700"
+                      >
+                        Edit
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => {
+                        if (log.id && confirm('Delete this log?')) {
+                          deleteLog(log.id)
+                        }
+                      }}
+                      className="text-xs text-red-600 hover:text-red-700"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
