@@ -116,7 +116,7 @@ export function LogsPage() {
   return (
     <PageContainer>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">Health Logs</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Health Logs</h1>
         <div className="flex gap-3">
           <Link
             to="/logs/new"
@@ -155,19 +155,19 @@ export function LogsPage() {
             <option value="severity-low">Sort by: Severity (Low → High)</option>
           </select>
           {/* Result count */}
-          <div className="flex items-center text-sm text-white/60">
+          <div className="flex items-center text-sm text-slate-500 dark:text-white/60">
             {filteredAndSortedLogs.length} of {logs.length} logs
           </div>
         </div>
       </div>
 
       {error && (
-        <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 text-red-300 rounded-lg">
+        <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-300 rounded-lg">
           {error}
         </div>
       )}
       {analysisError && (
-        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+        <div className="mb-4 p-3 bg-red-100 dark:bg-red-500/10 border border-red-400 dark:border-red-500/30 text-red-700 dark:text-red-300 rounded">
           {analysisError}
         </div>
       )}
@@ -176,7 +176,7 @@ export function LogsPage() {
         <div className="text-center py-12">
           {logs.length === 0 ? (
             <>
-              <p className="text-white/70 mb-4">No health logs yet. Create your first log!</p>
+              <p className="text-slate-600 dark:text-white/70 mb-4">No health logs yet. Create your first log!</p>
               <Link
                 to="/logs/new"
                 className="inline-block px-4 py-2 bg-accent hover:bg-accent/90 text-white rounded-lg font-medium transition-colors"
@@ -185,7 +185,7 @@ export function LogsPage() {
               </Link>
             </>
           ) : (
-            <p className="text-white/70">No logs match your search criteria.</p>
+            <p className="text-slate-600 dark:text-white/70">No logs match your search criteria.</p>
           )}
         </div>
       ) : (
@@ -193,18 +193,18 @@ export function LogsPage() {
           {filteredAndSortedLogs.map((log) => (
             <div
               key={log.id}
-              className="glass-card p-4 hover:bg-white/[0.07] transition-colors"
+              className="glass-card p-4 hover:bg-slate-50 dark:hover:bg-white/[0.07] transition-colors"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <Link
                     to={`/logs/${log.id}`}
-                    className="text-lg font-semibold text-brand hover:text-white transition-colors"
+                    className="text-lg font-semibold text-brand hover:text-slate-900 dark:hover:text-white transition-colors"
                   >
                     {log.title}
                   </Link>
                   {log.description && (
-                    <p className="text-white/70 text-sm mt-1 line-clamp-2">{log.description}</p>
+                    <p className="text-slate-600 dark:text-white/70 text-sm mt-1 line-clamp-2">{log.description}</p>
                   )}
                   {log.body_parts && log.body_parts.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -222,12 +222,12 @@ export function LogsPage() {
                 <div className="text-right shrink-0">
                   {log.severity && (
                     <div className="mb-2">
-                      <p className="text-sm font-medium text-white/80">
-                        Severity: <span className="text-red-400">{log.severity}/10</span>
+                      <p className="text-sm font-medium text-slate-700 dark:text-white/80">
+                        Severity: <span className="text-red-500 dark:text-red-400">{log.severity}/10</span>
                       </p>
                     </div>
                   )}
-                  <p className="text-xs text-white/50">
+                  <p className="text-xs text-slate-400 dark:text-white/50">
                     {new Date(log.date).toLocaleDateString()} at{' '}
                     {new Date(log.date).toLocaleTimeString()}
                   </p>
@@ -235,7 +235,7 @@ export function LogsPage() {
                     {log.id && (
                       <Link
                         to={`/logs/${log.id}/edit`}
-                        className="text-xs text-brand hover:text-white"
+                        className="text-xs text-brand hover:text-slate-900 dark:hover:text-white"
                       >
                         Edit
                       </Link>
@@ -246,7 +246,7 @@ export function LogsPage() {
                           deleteLog(log.id)
                         }
                       }}
-                      className="text-xs text-red-400 hover:text-red-300"
+                      className="text-xs text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300"
                     >
                       Delete
                     </button>

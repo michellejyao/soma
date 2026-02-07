@@ -58,10 +58,10 @@ export function NewLogPage() {
 
   return (
     <PageContainer>
-      <Link to="/logs" className="text-brand hover:text-white font-medium mb-4 inline-block">
+      <Link to="/logs" className="text-brand hover:text-slate-900 dark:hover:text-white font-medium mb-4 inline-block">
         ← Back to Logs
       </Link>
-      <h1 className="text-2xl font-bold text-white mb-6 font-display">New Symptom Log</h1>
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 font-display">New Symptom Log</h1>
 
       {error && (
         <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 text-red-300 rounded-lg">
@@ -72,7 +72,7 @@ export function NewLogPage() {
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Body Region - required */}
         <div>
-          <label htmlFor="bodyRegion" className="block text-sm font-medium text-white/80 mb-1">
+          <label htmlFor="bodyRegion" className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
             Body Region <span className="text-red-400">*</span>
           </label>
           <select
@@ -90,7 +90,7 @@ export function NewLogPage() {
             ))}
           </select>
           {initialRegion && bodyRegion === initialRegion && (
-            <p className="text-xs text-white/50 mt-1">
+            <p className="text-xs text-slate-500 dark:text-white/50 mt-1">
               Pre-selected from body viewer
             </p>
           )}
@@ -98,7 +98,7 @@ export function NewLogPage() {
 
         {/* Date/Time */}
         <div>
-          <label htmlFor="datetime" className="block text-sm font-medium text-white/80 mb-1">
+          <label htmlFor="datetime" className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
             Date &amp; Time
           </label>
           <input
@@ -112,7 +112,7 @@ export function NewLogPage() {
 
         {/* Pain Score 0-10 */}
         <div>
-          <label htmlFor="painScore" className="block text-sm font-medium text-white/80 mb-1">
+          <label htmlFor="painScore" className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
             Pain Score: <span className="font-semibold text-brand">{painScore}</span>
           </label>
           <input
@@ -124,7 +124,7 @@ export function NewLogPage() {
             onChange={(e) => setPainScore(Number(e.target.value))}
             className="w-full accent-brand"
           />
-          <div className="flex justify-between text-xs text-white/50 mt-1">
+          <div className="flex justify-between text-xs text-slate-500 dark:text-white/50 mt-1">
             <span>0 (none)</span>
             <span>10 (severe)</span>
           </div>
@@ -132,7 +132,7 @@ export function NewLogPage() {
 
         {/* Pain type */}
         <div>
-          <label className="block text-sm font-medium text-white/80 mb-2">
+          <label className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-2">
             Type of pain
           </label>
           <div className="flex flex-wrap gap-2">
@@ -144,7 +144,7 @@ export function NewLogPage() {
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium capitalize transition-colors ${
                   painType === p
                     ? 'bg-accent text-white'
-                    : 'bg-white/10 text-white/80 hover:bg-white/15 border border-white/10'
+                    : 'bg-white dark:bg-white/10 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/15 border border-slate-100 dark:border-white/10'
                 }`}
               >
                 {p}
@@ -156,7 +156,7 @@ export function NewLogPage() {
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                 painType === 'other'
                   ? 'bg-accent text-white'
-                  : 'bg-white/10 text-white/80 hover:bg-white/15 border border-white/10'
+                  : 'bg-white dark:bg-white/10 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/15 border border-slate-100 dark:border-white/10'
               }`}
             >
               Other
@@ -175,7 +175,7 @@ export function NewLogPage() {
 
         {/* Notes */}
         <div>
-          <label htmlFor="notes" className="block text-sm font-medium text-white/80 mb-1">
+          <label htmlFor="notes" className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-1">
             Notes
           </label>
           <textarea

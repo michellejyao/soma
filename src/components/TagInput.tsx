@@ -32,7 +32,7 @@ export function TagInput({ value, onChange, placeholder = 'Add item...', label, 
 
   return (
     <div>
-      <label className="block text-sm font-medium text-white/80 mb-2">
+      <label className="block text-sm font-medium text-slate-700 dark:text-white/80 mb-2">
         {label}
       </label>
       
@@ -42,13 +42,13 @@ export function TagInput({ value, onChange, placeholder = 'Add item...', label, 
           {value.map((item) => (
             <div
               key={item}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand/20 border border-brand/40 text-white text-sm"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand/20 border border-brand/40 text-slate-900 dark:text-white text-sm"
             >
               <span>{item}</span>
               <button
                 type="button"
                 onClick={() => handleRemove(item)}
-                className="hover:text-red-400 transition-colors"
+                className="hover:text-red-500 dark:hover:text-red-400 transition-colors"
                 aria-label={`Remove ${item}`}
               >
                 ×
@@ -66,7 +66,7 @@ export function TagInput({ value, onChange, placeholder = 'Add item...', label, 
           onChange={(e) => setInputValue(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder={placeholder}
-          className="flex-1 rounded border border-white/20 bg-white/10 px-3 py-2 text-white text-sm placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+          className="flex-1 rounded border border-slate-300 dark:border-white/20 bg-white dark:bg-white/10 px-3 py-2 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-white/40 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
         />
         <button
           type="button"
