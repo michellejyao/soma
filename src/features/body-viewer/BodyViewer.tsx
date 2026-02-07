@@ -16,23 +16,6 @@ export function BodyViewer() {
   const setSelectedBodyRegion = useAppStore((s) => s.setSelectedBodyRegion)
   const { logs } = useHealthLogs()
 
-  const mapDetailedToBroad = (region: string): BodyRegionId9 | null => {
-    if (region === 'head') return 'head'
-    if (region === 'neck') return 'neck'
-    if (region === 'chest') return 'chest'
-    if (region === 'back') return 'back'
-    if (region === 'abdomen') return 'abdomen'
-    if (region.startsWith('left_')) {
-      if (region.includes('leg') || region.includes('foot')) return 'left_leg'
-      return 'left_arm'
-    }
-    if (region.startsWith('right_')) {
-      if (region.includes('leg') || region.includes('foot')) return 'right_leg'
-      return 'right_arm'
-    }
-    return null
-  }
-
   const normalizeRegionId = (value: string): string => {
     return value
       .trim()
