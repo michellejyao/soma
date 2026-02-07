@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BodyViewer } from '../features/body-viewer/BodyViewer'
-import { BookModel3D } from '../features/BookModel'
+import BookModel from '../features/BookModel'
 import { useAppStore } from '../store'
 
 export function HomePage() {
@@ -23,7 +23,10 @@ export function HomePage() {
         
         {/* Left section */}
         <div className="w-1/2 flex items-center justify-center p-6">
-            <BookModel3D />
+            <BookModel
+              projectName="Health Tracker"
+              authorName="Edison Ying"
+            />
         </div>
 
         {/* Optional divider */}
