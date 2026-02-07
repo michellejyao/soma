@@ -12,9 +12,18 @@ interface PageProps {
   isOpen: boolean;
   flipDelay: number;
   totalPages: number;
+  onRotationChange?: (index: number, rotationY: number) => void; // new
 }
 
-const Page = ({ position, rotation, index, isOpen, flipDelay, totalPages }: PageProps) => {
+const Page = ({
+  position,
+  rotation,
+  index,
+  isOpen,
+  flipDelay,
+  totalPages,
+  onRotationChange,
+}: PageProps) => {
   const groupRef = useRef<THREE.Group>(null);
   const targetRotation = useRef(0);
   const currentRotation = useRef(0);
@@ -32,17 +41,18 @@ const Page = ({ position, rotation, index, isOpen, flipDelay, totalPages }: Page
       targetRotation.current = 0;
     }
 
-    // Smooth spring
     const speed = 3;
     currentRotation.current += (targetRotation.current - currentRotation.current) * delta * speed;
 
-    // Flutter effect
+    // flutter
     const flutter =
       isOpen && Math.abs(targetRotation.current - currentRotation.current) > 0.1
         ? Math.sin(Date.now() * 0.02 + index) * 0.02
         : 0;
 
     (groupRef.current.rotation as THREE.Euler).y = currentRotation.current + flutter;
+
+    if (onRotationChange) onRotationChange(index, currentRotation.current); // report rotation
   });
 
   const pageColor = useMemo(() => {
@@ -68,6 +78,7 @@ const Page = ({ position, rotation, index, isOpen, flipDelay, totalPages }: Page
     </group>
   );
 };
+
 
 // ---------- EndPage Component ----------
 const EndPage = ({ position, rotation }: { position: [number, number, number]; rotation: [number, number, number] }) => {
@@ -96,16 +107,23 @@ interface BookCoverProps {
   isOpen: boolean;
   projectName: string;
   authorName: string;
+  pagesClosed?: boolean; // new prop to control closing
 }
-
-const BookCover = ({ isOpen, projectName, authorName }: BookCoverProps) => {
+const BookCover = ({ isOpen, projectName, authorName, pagesClosed = true }: BookCoverProps) => {
   const frontCoverRef = useRef<THREE.Group>(null);
   const currentRotation = useRef(0);
 
   useFrame((_, delta) => {
     if (!frontCoverRef.current) return;
 
-    const targetRotation = isOpen ? -Math.PI * 0.75 : 0;
+    // If opening, rotate immediately
+    // If closing, only rotate back after pagesClosed is true
+    const targetRotation = isOpen
+      ? -Math.PI   // fully open
+      : pagesClosed
+      ? 0              // fully closed after pages closed
+      : currentRotation.current; // freeze while pages are still closing
+
     const speed = 4;
     currentRotation.current += (targetRotation - currentRotation.current) * delta * speed;
     (frontCoverRef.current.rotation as THREE.Euler).y = currentRotation.current;
@@ -147,7 +165,7 @@ const BookCover = ({ isOpen, projectName, authorName }: BookCoverProps) => {
         {projectName}
       </Text>
 
-      {/* Front Cover - animated */}
+      {/* Front Cover - always visible */}
       <group ref={frontCoverRef} position={[-1.5, 0, 0]}>
         <group position={[1.5, 0, 0]}>
           <RoundedBox args={[3, 4, 0.15]} radius={0.02} position={[0, 0, 0.2]} castShadow receiveShadow>
@@ -188,7 +206,12 @@ const BookCover = ({ isOpen, projectName, authorName }: BookCoverProps) => {
             {authorName}
           </Text>
 
-          {[ [1.2, 1.7], [-1.2, 1.7], [1.2, -1.7], [-1.2, -1.7] ].map(([x, y], i) => (
+          {[
+            [1.2, 1.7],
+            [-1.2, 1.7],
+            [1.2, -1.7],
+            [-1.2, -1.7],
+          ].map(([x, y], i) => (
             <mesh key={i} position={[x, y, 0.285]}>
               <circleGeometry args={[0.08, 16]} />
               <meshStandardMaterial color={goldColor} metalness={0.8} roughness={0.2} />
@@ -200,6 +223,8 @@ const BookCover = ({ isOpen, projectName, authorName }: BookCoverProps) => {
   );
 };
 
+
+
 // ---------- Book 3D Component ----------
 interface Book3DProps {
   isOpen: boolean;
@@ -210,10 +235,19 @@ interface Book3DProps {
 const Book3D = ({ isOpen, onToggle, projectName, authorName }: Book3DProps) => {
   const bookRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0); // track which page is flipping
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageRotations, setPageRotations] = useState<number[]>([]); // new
   const pageCount = 8;
 
-  // Handle sequential flipping
+  const handleRotationChange = (index: number, rotationY: number) => {
+    setPageRotations((prev) => {
+      const newArr = [...prev];
+      newArr[index] = rotationY;
+      return newArr;
+    });
+  };
+
+  // Float + tilt
   useFrame((_, delta) => {
     if (!bookRef.current) return;
     bookRef.current.position.y = Math.sin(Date.now() * 0.001) * 0.05;
@@ -221,19 +255,20 @@ const Book3D = ({ isOpen, onToggle, projectName, authorName }: Book3DProps) => {
     bookRef.current.rotation.x += (targetRotX - bookRef.current.rotation.x) * delta * 3;
   });
 
-  // Flip pages sequentially
+  // Sequential page flip
   useEffect(() => {
-    if (!isOpen) {
-      setCurrentPage(0);
-      return;
+    if (isOpen && currentPage < pageCount) {
+      const timer = setTimeout(() => setCurrentPage(currentPage + 1), 150);
+      return () => clearTimeout(timer);
     }
-    if (currentPage < pageCount) {
-      const timer = setTimeout(() => {
-        setCurrentPage(currentPage + 1);
-      }, 150); // flip next page every 150ms
+    if (!isOpen && currentPage > 0) {
+      const timer = setTimeout(() => setCurrentPage(currentPage - 1), 150);
       return () => clearTimeout(timer);
     }
   }, [isOpen, currentPage]);
+
+  // Check if all pages are fully closed (rotation near 0)
+  const pagesClosed = pageRotations.every((rot) => Math.abs(rot || 0) < 0.01);
 
   return (
     <group
@@ -248,24 +283,33 @@ const Book3D = ({ isOpen, onToggle, projectName, authorName }: Book3DProps) => {
         document.body.style.cursor = 'default';
       }}
     >
-      <BookCover isOpen={isOpen} projectName={projectName} authorName={authorName} />
+      <BookCover
+        isOpen={isOpen}
+        projectName={projectName}
+        authorName={authorName}
+        pagesClosed={pagesClosed} // only allow cover to close after pages fully closed
+      />
+
       {[...Array(pageCount)].map((_, i) => (
         <Page
           key={i}
           position={[-1.5, 0, 0.05 + i * 0.01]}
           rotation={[0, 0, 0]}
           index={i}
-          isOpen={i < currentPage} // flip page only if index < currentPage
+          isOpen={i < currentPage}
           flipDelay={0}
           totalPages={pageCount}
+          onRotationChange={handleRotationChange} // track rotations
         />
       ))}
 
-      {/* End page appears after all pages */}
-      {currentPage >= pageCount && <EndPage position={[-1.5, 0, 0.05 + pageCount * 0.01]} rotation={[0, 0, 0]} />}
+      {isOpen && currentPage >= pageCount && (
+        <EndPage position={[-1.5, 0, 0.05 + pageCount * 0.01]} rotation={[0, 0, 0]} />
+      )}
     </group>
   );
 };
+
 
 
 // ---------- Main BookModel Component ----------

@@ -25,7 +25,6 @@ export function HomePage() {
         <div className="w-1/2 flex items-center justify-center p-6">
             <BookModel
               projectName="Health Tracker"
-              authorName="Edison Ying"
             />
         </div>
 
