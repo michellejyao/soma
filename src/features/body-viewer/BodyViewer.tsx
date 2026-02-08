@@ -294,6 +294,7 @@ export function BodyViewer() {
               DOB:{' '}
               {profile?.date_of_birth ? new Date(profile.date_of_birth).toLocaleDateString() : '—'}
             </div>
+            <div>Blood Type: {profile?.blood_type || '—'}</div>
             <div>
               Chronic:{' '}
               {profile?.chronic_conditions && profile.chronic_conditions.length > 0
@@ -309,7 +310,7 @@ export function BodyViewer() {
             {profileError && <div className="text-red-300 mt-2">{profileError}</div>}
           </div>
         </div>
-        <div className="rounded-xl border border-white/20 bg-white/5 p-4 text-white/90">
+        <div className="rounded-xl border border-white/20 bg-white/5 p-2 text-white/90">
           <div className="text-sm font-semibold mb-3">Severity Over Time</div>
           <div className="text-xs text-white/50 mb-2">
             Selected: {selectedBodyRegion ?? '—'} • Points: {severityTrend.length}
@@ -334,7 +335,7 @@ export function BodyViewer() {
                 ? BODY_REGION_LABELS[selectedBodyRegion] ?? selectedBodyRegion
                 : 'Select a body region'}
             </div>
-            <svg viewBox="0 0 320 140" className="w-full h-32" style={{ pointerEvents: 'none' }}>
+            <svg viewBox="0 0 320 140" className="w-full h-48" style={{ pointerEvents: 'none' }}>
               <defs>
                 <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="rgba(125, 211, 252, 0.35)" />
