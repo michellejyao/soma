@@ -126,7 +126,7 @@ export function LogDetailPage() {
   if (error || !log) {
     return (
       <PageContainer>
-        <Link to="/logs" className="text-brand hover:text-white font-medium mb-4 inline-block">
+        <Link to="/logs" className="text-brand hover:text-slate-900 dark:hover:text-white font-medium mb-4 inline-block">
           ← Back to Logs
         </Link>
         <div className="bg-red-500/10 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg">
@@ -138,19 +138,18 @@ export function LogDetailPage() {
 
   return (
     <PageContainer>
-      <Link to="/logs" className="text-brand hover:text-white font-medium mb-4 inline-block">
+      <Link to="/logs" className="text-brand hover:text-slate-900 dark:hover:text-white font-medium mb-4 inline-block">
         ← Back to Logs
       </Link>
 
       <div className="glass-card p-6">
         <div className="flex flex-wrap justify-between items-start gap-3 mb-4">
           <div>
-            <h1 className="text-2xl font-bold text-white font-display">{log.title}</h1>
-            <p className="text-white/70 mt-1">{log.description}</p>
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white font-display">{log.title}</h1>
+            <p className="text-slate-600 dark:text-white/70 mt-1">{log.description}</p>
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-2">
             <button
-              type="button"
               onClick={() => setAnalyzeImageOpen(true)}
               className="px-3 py-1.5 text-sm text-black bg-accent hover:bg-accent/90 rounded-lg font-medium transition-colors"
             >
@@ -171,10 +170,10 @@ export function LogDetailPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-white/10">
+        <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-100 dark:border-white/10">
           <div>
-            <p className="text-sm font-semibold text-white/70">Date & Time</p>
-            <p className="text-white/90">
+            <p className="text-sm font-semibold text-slate-600 dark:text-white/70">Date & Time</p>
+            <p className="text-slate-800 dark:text-white/90">
               {new Date(log.date).toLocaleDateString()} at{' '}
               {new Date(log.date).toLocaleTimeString()}
             </p>
@@ -182,15 +181,15 @@ export function LogDetailPage() {
 
           {log.severity && (
             <div>
-              <p className="text-sm font-semibold text-white/70">Severity</p>
-              <p className="text-white/90">{log.severity} / 10</p>
+              <p className="text-sm font-semibold text-slate-600 dark:text-white/70">Severity</p>
+              <p className="text-slate-800 dark:text-white/90">{log.severity} / 10</p>
             </div>
           )}
         </div>
 
         {log.body_parts && log.body_parts.length > 0 && (
-          <div className="mt-4 pt-4 border-t border-white/10">
-            <p className="text-sm font-semibold text-white/70 mb-2">Body Parts / Tags</p>
+          <div className="mt-4 pt-4 border-t border-slate-100 dark:border-white/10">
+            <p className="text-sm font-semibold text-slate-600 dark:text-white/70 mb-2">Body Parts / Tags</p>
             <div className="flex flex-wrap gap-2">
               {log.body_parts.map((part) => (
                 <span
