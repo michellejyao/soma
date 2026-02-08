@@ -122,11 +122,12 @@ export const EndPage = ({
           transform
           occlude={false}
           distanceFactor={scale * 5}
-          position={[1.4 * scale, -0.22 * scale, pageThickness + 0.001]}
+          // Shift right to make left margin larger, and down to make bottom margin larger
+          position={[(1.45) * scale, -0.05 * scale, pageThickness + 0.001]}
           style={{
-            width: `${pageWidth * 100}px`,
-            height: `${pageHeight * 100}px`,
-            padding: '14px',
+            width: `${(pageWidth * 100) - 25}px`, // reduce width from left
+            height: `${(pageHeight * 100) - 40}px`, // reduce height from bottom
+            padding: '12px',
             boxSizing: 'border-box',
             overflow: 'hidden',
             // pointerEvents removed to avoid raycast bug
@@ -326,6 +327,13 @@ const Book3D = ({
     });
   };
 
+  // Helper: is the last page visually fully open?
+  const lastPageOpen = (() => {
+    const last = pageRotations[pageCount - 1];
+    // maxRotation from Page: -Math.PI * 0.85
+    return last !== undefined && Math.abs(last - (-Math.PI * 0.85)) < 0.08;
+  })();
+
   // Page flip animation
   useEffect(() => {
     if (isOpen && currentPage < pageCount) {
@@ -373,7 +381,7 @@ const Book3D = ({
 
       {/* 🔖 BOOKMARKS (ONLY CLICKABLE OBJECTS) */}
       {/* End Page */}
-      {displayComponent && currentPage >= pageCount && (
+      {displayComponent && lastPageOpen && (
         <EndPage
           position={[-1.5 * scale, 0, 0.05 * scale + pageCount * 0.01 * scale]}
           rotation={[0, 0, 0]}
@@ -402,7 +410,7 @@ const Book3D = ({
       </group>
 
       {/* End Page duplicate for both sides - use displayComponent */}
-      {displayComponent && currentPage >= pageCount && (
+      {displayComponent && lastPageOpen && (
         <EndPage
           position={[-1.5 * scale, 0, 0.05 * scale + pageCount * 0.01 * scale]}
           rotation={[0, 0, 0]}
