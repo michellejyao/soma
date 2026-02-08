@@ -1,17 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
-import type { BodyRegionId } from '../types'
 import { BodyViewer } from '../features/body-viewer/BodyViewer'
 import BookModel from '../features/book/BookModel'
 import {
-  BodyRegionLogPage,
   FamilyHealthHistoryPage,
   DoctorAppointmentPage,
-  AIInsightsPage,
   MedicalLogsPage,
   HealthProfilePage,
 } from '../features/book/pages'
-import { useAppStore } from '../store'
 import { PageContainer } from '../components/PageContainer'
 
 /**
@@ -21,20 +17,8 @@ import { PageContainer } from '../components/PageContainer'
  */
 export function HomePage() {
   const [bookVisible, setBookVisible] = useState(false)
-  const [bodyRegionOverlay, setBodyRegionOverlay] = useState<BodyRegionId | null>(null)
-  const selectedBodyRegion = useAppStore((s) => s.selectedBodyRegion)
-  const setSelectedBodyRegion = useAppStore((s) => s.setSelectedBodyRegion)
-
   // Get user from Auth0
   const { user } = useAuth0()
-
-  // Body part click: show HTML overlay (no second Canvas) so body keeps working
-  useEffect(() => {
-    if (selectedBodyRegion) {
-      setBodyRegionOverlay(selectedBodyRegion)
-      setSelectedBodyRegion(null)
-    }
-  }, [selectedBodyRegion, setSelectedBodyRegion])
 
   const userId = user?.sub ?? '';
   const bookmarks = [
@@ -83,40 +67,6 @@ export function HomePage() {
                 <BodyViewer />
               </div>
 
-              {/* Body region overlay - HTML only, no second Canvas */}
-              {bodyRegionOverlay && (
-                <div
-                  className="absolute inset-0 z-20 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-                  role="dialog"
-                  aria-modal="true"
-                  onClick={() => setBodyRegionOverlay(null)}
-                >
-                  <div
-                    className="glass-card max-w-lg w-full mx-4 max-h-[85vh] overflow-y-auto"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <div className="sticky top-0 bg-slate-50 dark:bg-white/5 backdrop-blur border-b border-slate-100 dark:border-white/10 px-4 py-3 flex justify-between items-center">
-                      <span className="font-semibold text-slate-800 dark:text-white/90">Recorded issues</span>
-                      <button
-                        type="button"
-                        onClick={() => setBodyRegionOverlay(null)}
-                        className="p-1.5 text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded transition-colors"
-                        aria-label="Close"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                    <div className="p-4">
-                      <BodyRegionLogPage
-                        bodyRegion={bodyRegionOverlay}
-                        recordedIssuesOnly
-                        onSaved={() => setBodyRegionOverlay(null)}
-                        onCancel={() => setBodyRegionOverlay(null)}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
             </>
           )}
         </div>

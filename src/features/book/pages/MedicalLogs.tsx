@@ -53,9 +53,9 @@ export function MedicalLogsPage({ userId: propUserId }: MedicalLogsPageProps) {
 									)}
 								</div>
 								<p className="font-medium text-black mt-1">{log.title}</p>
-								{log.symptom_tags?.length > 0 && (
+								{(log.symptom_tags ?? []).length > 0 && (
 									<div className="flex flex-wrap gap-1 mt-1">
-										{log.symptom_tags.slice(0, 5).map((t) => (
+										{(log.symptom_tags ?? []).slice(0, 5).map((t) => (
 											<span key={t} className="text-xs bg-black/10 text-black/80 px-1.5 py-0.5 rounded">{t}</span>
 										))}
 									</div>
