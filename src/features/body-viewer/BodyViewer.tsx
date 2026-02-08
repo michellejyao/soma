@@ -303,11 +303,11 @@ export function BodyViewer() {
             onChange={(e) =>
               setSelectedBodyRegion(e.target.value ? (e.target.value as BodyRegionId20) : null)
             }
-            className="w-full rounded-lg border border-white/20 bg-white/5 px-2 py-1 text-sm text-white/90 mb-3"
+            className="w-full rounded-lg border border-slate-300 dark:border-white/20 bg-white dark:bg-slate-800 px-2 py-1 text-sm text-slate-900 dark:text-white mb-3 transition-colors"
           >
-            <option value="">Select a body region</option>
+            <option value="" className="bg-white text-slate-900 dark:bg-slate-800 dark:text-white">Select a body region</option>
             {BODY_REGIONS.map((region) => (
-              <option key={region} value={region}>
+              <option key={region} value={region} className="bg-white text-slate-900 dark:bg-slate-800 dark:text-white">
                 {BODY_REGION_LABELS[region] ?? region}
               </option>
             ))}
